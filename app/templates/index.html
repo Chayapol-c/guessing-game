@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="flex flex-col items-center bg-gray-200">
+
+    <h1 class ="my-16 font-bold text-4xl text-pink-400" >Guessing Game</h1>
+
+    <form
+        class="my-16" 
+        action="/question", method="POST">
+        <input 
+            class="px-4 py-3 border border-blue-200 rounded"
+            type="text" name="question">
+
+        <button 
+            class="px-4 py-3 border border-blue-200 rounded bg-blue-500 text-white"
+            type="submit" >Submit</button>
+    </form>
+
+    {% if doc.isFinished %}
+        <h2 class ="font-bold text-4xl text-pink-400" >You Win</h2>
+    {% else %}
+        <div
+            class="px-4 py-3 border-b-2 border-red-500 text-center tracking-widest">
+            {{ text }}
+        </div>
+    {% endif %}
+
+
+        <form 
+            class="my-16"
+            action="/guess", method="POST">
+            <input 
+                class="mx-2 px-4 py-3 border-blue-200 rounded bg-blue-500 text-white cursor-pointer"
+                type="submit" value="a" name="letter">
+            <input 
+                class="mx-2 px-4 py-3 border-blue-200 rounded bg-blue-500 text-white cursor-pointer"
+                type="submit" value="b" name="letter">
+            <input 
+                class="mx-2 px-4 py-3 border-blue-200 rounded bg-blue-500 text-white cursor-pointer"
+                type="submit" value="c" name="letter">
+            <input 
+                class="mx-2 px-4 py-3 border-blue-200 rounded bg-blue-500 text-white cursor-pointer"
+                type="submit" value="d" name="letter">
+
+        </form>
+
+        
+        <div class="w-1/3 flex justify-between">
+            <h3
+                class="text-md" 
+            >count: {{doc.countWrong}}</h3>
+            <h3>answer: <span class="border-b-2 border-red-500"> {{"".join(doc.answered)}} </span> </h3>
+        </div>
+
+        {% if doc.isFinished %}
+            <form action="/reset", method="POST">
+                <button 
+                    class="px-4 py-3 border border-blue-200 rounded bg-blue-500 text-white cursor-pointer"
+                    type="submit" >Play again</button>
+            </form>
+        {% endif %}
+
+
+</body>
+</html>
